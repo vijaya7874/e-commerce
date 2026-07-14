@@ -1,0 +1,58 @@
+<section class="shelf">
+  <header class="shelf__top shell">
+    <p class="caption">{{ shown().length }} on the shelf</p>
+    <h1 class="display shelf__title">Everything we make</h1>
+
+    <div class="cuts" role="tablist" aria-label="Filter">
+      @for (c of cuts; track c.id) {
+        <button
+          type="button"
+          role="tab"
+          class="cuts__b"
+          [class.is-on]="cut() === c.id"
+          [attr.aria-selected]="cut() === c.id"
+          (click)="cut.set(c.id)">
+          {{ c.label }}
+        </button>
+      }
+    </div>
+  </header>
+
+  <div class="shell">
+    <ul class="rows">
+      @for (p of shown(); track p.id; let i = $index) {
+        <li
+          class="row"
+          appReveal
+          [revealDelay]="i * 60"
+          [ngStyle]="{ '--hue': p.hue, '--deep': p.deep }">
+
+          <a class="row__jar" [routerLink]="['/product', p.slug]" aria-hidden="true">
+            <app-jar [hue]="p.hue" [deep]="p.deep" [fill]="0.66" [key]="'shelf-' + p.id" />
+          </a>
+
+          <div class="row__id">
+            <a class="row__name display" [routerLink]="['/product', p.slug]">{{ p.name }}</a>
+            <p class="latin row__latin">{{ p.latin }}</p>
+          </div>
+
+
+          <p class="row__line">{{ p.line }}</p>
+
+          <p class="caption row__weight">{{ p.weight }}</p>
+
+          <p class="num row__price">
+            ₹{{ p.price | number: '1.0-2' }}
+            @if (p.mrp > p.price) {
+              <s>₹{{ p.mrp | number: '1.0-0' }}</s>
+            }
+          </p>
+
+          <button type="button" class="act row__add" (click)="add(p)">Add</button>
+        </li>
+      } @empty {
+        <li class="rows__none">Nothing under that filter.</li>
+      }
+    </ul>
+  </div>
+</section>

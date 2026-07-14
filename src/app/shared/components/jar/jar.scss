@@ -1,0 +1,31 @@
+.jar {
+  width: 100%;
+  height: auto;
+  display: block;
+  color: var(--rule);
+  overflow: visible;
+
+  &__powder,
+  &__surface,
+  &__sediment {
+    transition:
+      fill 900ms cubic-bezier(.4, 0, .2, 1),
+      y 700ms cubic-bezier(.32, 0, .16, 1),
+      height 700ms cubic-bezier(.32, 0, .16, 1),
+      d 700ms cubic-bezier(.32, 0, .16, 1);
+  }
+
+  &__glass,
+  &__lid,
+  &__label {
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jar__powder,
+  .jar__surface,
+  .jar__sediment {
+    transition: fill 200ms linear;
+  }
+}

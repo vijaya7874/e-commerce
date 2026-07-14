@@ -1,0 +1,26 @@
+<div class="ticker">
+  <div class="ticker__track">
+    @for (i of tickerRepeats; track i) {
+      <span class="ticker__text">
+        FREE SHIPPING OVER ₹499 ✦ BUY 2 GET 15% OFF ✦ NO SUGAR NO FILLERS NO NONSENSE ✦ MADE IN GUNTUR ✦
+      </span>
+    }
+  </div>
+</div>
+
+<header class="bar">
+  <a routerLink="/" class="bar__logo">HERBAL<span class="bar__dot">.</span></a>
+
+  <nav class="bar__nav">
+    <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/shop" routerLinkActive="is-active">Shop</a>
+    <a href="#story">Story</a>
+  </nav>
+
+  <a routerLink="/cart" class="bar__bag" [attr.aria-label]="'Bag, ' + cart.count() + ' items'">
+    BAG
+    @if (cart.count(); as n) {
+      <em class="bar__badge">{{ n }}</em>
+    }
+  </a>
+</header>

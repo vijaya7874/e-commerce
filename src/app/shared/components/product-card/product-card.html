@@ -1,0 +1,32 @@
+<article
+  class="card"
+  [ngStyle]="{ '--c': product().color, '--i': product().ink }"
+  (mouseenter)="hover.emit(product().color)"
+  (mouseleave)="hover.emit(null)">
+
+  <a [routerLink]="['/product', product().slug]" class="card__face">
+    <span class="card__glyph" aria-hidden="true">{{ product().emoji }}</span>
+
+    @if (discount() > 0) {
+      <span class="card__off">−{{ discount() }}%</span>
+    }
+
+    <span class="card__weight mono">{{ product().weight }}</span>
+  </a>
+
+  <div class="card__meta">
+    <h3 class="card__name">{{ product().name }}</h3>
+    <p class="card__tagline">{{ product().tagline }}</p>
+
+    <div class="card__row">
+      <span class="card__price">
+        {{ product().price | currency: 'INR' : 'symbol' : '1.0-0' }}
+        @if (discount() > 0) {
+          <s>{{ product().mrp | currency: 'INR' : 'symbol' : '1.0-0' }}</s>
+        }
+      </span>
+
+      <button type="button" class="card__add" (click)="addToCart()">ADD</button>
+    </div>
+  </div>
+</article>

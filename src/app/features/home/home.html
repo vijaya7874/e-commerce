@@ -1,0 +1,211 @@
+<!--
+  The page is one descent. A jar stays pinned at the centre while six plants
+  pass through it. Everything else assembles and leaves.
+-->
+
+<div
+  class="field"
+  [ngStyle]="{ '--hue': current().hue, '--deep': current().deep }">
+
+  <!-- ============ OPENING ============ -->
+  <header class="open">
+    <div class="open__inner shell">
+      <p class="caption open__where">Guntur · Andhra Pradesh</p>
+
+      <h1 class="display open__title">
+        <span class="open__line">Six plants,</span>
+        <span class="open__line open__line--2">ground down</span>
+        <span class="open__line open__line--3">to powder.</span>
+      </h1>
+
+      <p class="open__lede">
+        Nothing is added. Read the label — it names the plant, and then it stops.
+      </p>
+    </div>
+
+    <div class="open__hint" [class.is-gone]="scroll.moved()">
+      <span class="caption">Scroll</span>
+      <span class="open__stem"></span>
+    </div>
+  </header>
+
+  <!-- ============ THE JAR ============ -->
+  <!--
+    Fixed. It never scrolls. The plants come to it.
+  -->
+  <div class="vessel" aria-hidden="true">
+    <div class="vessel__hold" [style.transform]="'translateX(' + drift() + 'px)'">
+      <app-jar
+        [hue]="current().hue"
+        [deep]="current().deep"
+        [fill]="fill()"
+        key="main" />
+    </div>
+
+    <p class="vessel__count num">
+      {{ counter() }}<span class="vessel__slash">/</span>{{ totalChapters() }}
+    </p>
+  </div>
+
+  <!-- ============ CHAPTERS ============ -->
+  @for (p of chapters; track p.id; let i = $index) {
+    <section
+      #chapter
+      class="ch"
+      [class.is-live]="scroll.active() === i"
+      [attr.aria-label]="p.name">
+
+      <!-- Left column: the plant speaks -->
+      <div class="ch__left">
+        <div class="ch__block">
+          <p class="latin ch__latin">{{ p.latin }}</p>
+
+          <h2 class="display ch__name">{{ p.name }}</h2>
+
+          <p class="ch__line">{{ p.line }}</p>
+
+          <dl class="facts">
+            @for (f of p.facts; track f.k) {
+              <div class="facts__row">
+                <dt class="caption">{{ f.k }}</dt>
+                <dd class="num">{{ f.v }}</dd>
+              </div>
+            }
+          </dl>
+        </div>
+      </div>
+
+      <!-- Right column: what it costs, what to do with it -->
+      <div class="ch__right">
+        <div class="ch__block">
+          <p class="ch__origin">{{ p.origin }}</p>
+
+          <div class="buy">
+            <p class="buy__price num">
+              ₹{{ p.price | number: '1.0-2' }}
+              @if (p.mrp > p.price) {
+                <s class="buy__mrp">₹{{ p.mrp | number: '1.0-0' }}</s>
+              }
+            </p>
+
+            <p class="caption buy__weight">{{ p.weight }}</p>
+
+            <div class="buy__acts">
+              <button type="button" class="act act--solid" (click)="addToCart(p)">
+                Add to bag
+              </button>
+              <a class="act" [routerLink]="['/product', p.slug]">Read more</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- ============ THE PROCESS ============ -->
+  <!--
+    A real sequence, so it earns its numbers.
+  -->
+  <section class="proc">
+    <div class="shell">
+      <p class="caption proc__eyebrow" appReveal>From field to jar</p>
+
+      <ol class="proc__list">
+        <li class="proc__step" appReveal [revealDelay]="0">
+          <span class="num proc__n">01</span>
+          <h3 class="proc__h">Bought</h3>
+          <p class="proc__p">
+            Direct from farms around Guntur. No broker sits in between, which is why
+            we can tell you whose field it came from.
+          </p>
+        </li>
+
+        <li class="proc__step" appReveal [revealDelay]="120">
+          <span class="num proc__n">02</span>
+          <h3 class="proc__h">Dried</h3>
+          <p class="proc__p">
+            Below 45°C, or in the sun. Heat is fast and cheap and it takes the colour
+            and the smell with it. We go slow instead.
+          </p>
+        </li>
+
+        <li class="proc__step" appReveal [revealDelay]="240">
+          <span class="num proc__n">03</span>
+          <h3 class="proc__h">Milled</h3>
+          <p class="proc__p">
+            In batches small enough to watch. Big runs heat the powder as they grind,
+            and you can taste the difference.
+          </p>
+        </li>
+
+        <li class="proc__step" appReveal [revealDelay]="360">
+          <span class="num proc__n">04</span>
+          <h3 class="proc__h">Sealed</h3>
+          <p class="proc__p">
+            The same day it is milled. Nothing is added at this step, because there is
+            nothing we want to add.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ COMBOS ============ -->
+  <section class="pairs">
+    <div class="shell">
+      <header class="pairs__head" appReveal>
+        <h2 class="display pairs__title">Boxed together</h2>
+        <p class="pairs__sub">Buy any two and take 15% off. Free shipping over ₹499.</p>
+      </header>
+
+      <div class="pairs__grid">
+        @for (c of combos; track c.id; let i = $index) {
+          <article
+            class="pair"
+            appReveal
+            [revealDelay]="i * 100"
+            [ngStyle]="{ '--hue': c.hue, '--deep': c.deep }">
+
+            <div class="pair__jar">
+              <app-jar [hue]="c.hue" [deep]="c.deep" [fill]="0.7" [key]="c.id" />
+            </div>
+
+            <div class="pair__body">
+              <h3 class="display pair__name">{{ c.name }}</h3>
+              <p class="pair__line">{{ c.line }}</p>
+
+              <p class="pair__price num">
+                ₹{{ c.price | number: '1.0-2' }}
+                <s class="pair__mrp">₹{{ c.mrp | number: '1.0-0' }}</s>
+              </p>
+
+              <p class="caption pair__weight">{{ c.weight }}</p>
+
+              <button type="button" class="act" (click)="addToCart(c)">Add to bag</button>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="close" id="story">
+    <div class="shell close__inner">
+      <p class="display close__q" appReveal>
+        We grew up in the fields<br />
+        we now buy from.
+      </p>
+
+      <p class="close__p" appReveal [revealDelay]="140">
+        Farming here is not a supply chain. It is the neighbours. So we buy small, dry
+        slow, and bulk nothing out. If a jar looks less full than the one beside it on
+        the shelf, that is because we did not put anything in it to fill the gap.
+      </p>
+
+      <a routerLink="/shop" class="act act--solid" appReveal [revealDelay]="240">
+        See the shelf
+      </a>
+    </div>
+  </section>
+</div>

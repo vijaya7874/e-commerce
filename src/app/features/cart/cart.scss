@@ -1,0 +1,286 @@
+.page {
+  padding: 56px 24px 110px;
+
+  &__title {
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    margin: 8px 0 30px;
+  }
+}
+
+/* ---------- METER ---------- */
+.meter {
+  margin-bottom: 34px;
+  max-width: 560px;
+
+  &__bar {
+    height: 14px;
+    border: var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    overflow: hidden;
+    margin-bottom: 9px;
+  }
+
+  &__fill {
+    height: 100%;
+    background: var(--ink);
+    transition: width 500ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  &.is-done &__fill {
+    background: #2FBF71;
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    opacity: .7;
+  }
+}
+
+/* ---------- LAYOUT ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 30px;
+  align-items: start;
+}
+
+.lines {
+  display: grid;
+  gap: 14px;
+}
+
+/* ---------- LINE ---------- */
+.line {
+  display: grid;
+  grid-template-columns: 90px 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  padding: 16px;
+  border: var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+
+  &__thumb {
+    display: grid;
+    place-items: center;
+    width: 90px;
+    height: 90px;
+    background: var(--c);
+    color: var(--i);
+    border: var(--line);
+    border-radius: 14px;
+    font-size: 2.4rem;
+    text-decoration: none;
+  }
+
+  &__name {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  &__weight {
+    font-size: 0.7rem;
+    opacity: .55;
+    margin-bottom: 8px;
+  }
+
+  &__remove {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--ink);
+    opacity: .6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__price {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.05rem;
+  }
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: var(--line);
+  border-radius: 999px;
+  padding: 3px;
+
+  button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: 999px;
+
+    &:hover {
+      background: var(--c);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ink);
+    }
+  }
+
+  span {
+    min-width: 24px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------- SUMMARY ---------- */
+.summary {
+  position: sticky;
+  top: 100px;
+  padding: 26px;
+  border: var(--line);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--shadow);
+
+  &__title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    display: grid;
+    gap: 11px;
+    margin-bottom: 18px;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+
+    dt {
+      opacity: .65;
+    }
+
+    &--saved dd {
+      color: #2FBF71;
+      font-weight: 700;
+    }
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 16px;
+    border-top: 2px solid rgba(255, 255, 255, .2);
+    margin-bottom: 20px;
+
+    span {
+      font-size: 0.9rem;
+      opacity: .65;
+    }
+
+    strong {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 1.7rem;
+    }
+  }
+
+  &__checkout {
+    width: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--paper);
+
+    &:hover {
+      box-shadow: 6px 6px 0 var(--paper);
+    }
+  }
+
+  &__keep {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.78rem;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: .6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------- EMPTY ---------- */
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 80px 0;
+  text-align: center;
+
+  &__glyph {
+    font-size: 4rem;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+  }
+
+  &__body {
+    opacity: .6;
+    margin-bottom: 12px;
+  }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 880px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    position: static;
+  }
+
+  .line {
+    grid-template-columns: 70px 1fr;
+    grid-template-areas:
+      'thumb meta'
+      'step  price';
+
+    &__thumb {
+      grid-area: thumb;
+      width: 70px;
+      height: 70px;
+      font-size: 1.9rem;
+    }
+
+    &__meta {
+      grid-area: meta;
+    }
+
+    &__price {
+      grid-area: price;
+      justify-self: end;
+    }
+  }
+
+  .stepper {
+    grid-area: step;
+  }
+}

@@ -1,0 +1,109 @@
+.ticker {
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+  padding: 9px 0;
+  border-bottom: var(--line);
+
+  &__track {
+    display: flex;
+    gap: 40px;
+    white-space: nowrap;
+    animation: ticker-slide 40s linear infinite;
+  }
+
+  &__text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+  }
+}
+
+@keyframes ticker-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 24px;
+  background: var(--stage);
+  border-bottom: var(--line);
+  transition: background 600ms cubic-bezier(.22, 1, .36, 1);
+
+  &__logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  &__dot {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+  }
+
+  &__nav {
+    display: flex;
+    gap: 26px;
+
+    a {
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--ink);
+      padding-bottom: 3px;
+      border-bottom: 3px solid transparent;
+
+      &:hover,
+      &.is-active {
+        border-bottom-color: var(--ink);
+      }
+    }
+  }
+
+  &__bag {
+    position: relative;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 11px 20px;
+    border-radius: 999px;
+  }
+
+  &__badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-style: normal;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .bar__nav {
+    display: none;
+  }
+}

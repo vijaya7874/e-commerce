@@ -1,0 +1,68 @@
+.foot {
+  background: var(--soil);
+  color: var(--bone);
+  padding-top: clamp(4rem, 8vw, 6rem);
+  padding-bottom: 2rem;
+
+  .caption {
+    color: color-mix(in oklab, var(--bone) 55%, transparent);
+  }
+
+  &__top {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 4rem;
+  }
+
+  &__word {
+    font-size: 1.6rem;
+    margin-bottom: 0.9rem;
+  }
+
+  &__blurb {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    max-width: 32ch;
+    color: color-mix(in oklab, var(--bone) 62%, transparent);
+  }
+
+  &__col {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    font-size: 0.88rem;
+
+    .caption {
+      margin-bottom: 0.6rem;
+    }
+
+    a,
+    address,
+    p {
+      color: color-mix(in oklab, var(--bone) 72%, transparent);
+      text-decoration: none;
+      font-style: normal;
+      line-height: 1.6;
+      transition: color 300ms var(--ease);
+    }
+
+    a:hover {
+      color: var(--bone);
+    }
+  }
+
+  &__end {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1.75rem;
+    border-top: 1px solid color-mix(in oklab, var(--bone) 16%, transparent);
+  }
+}
+
+@media (max-width: 800px) {
+  .foot__top {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}

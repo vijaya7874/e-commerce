@@ -1,0 +1,105 @@
+@if (product(); as p) {
+
+  <article
+    class="pd"
+    [ngStyle]="{ '--hue': p.hue, '--deep': p.deep }">
+
+    <!-- ---------- Head ---------- -->
+    <div class="pd__head shell">
+
+      <div class="pd__jar">
+        <app-jar [hue]="p.hue" [deep]="p.deep" [fill]="0.72" [key]="'pd-' + p.id" />
+      </div>
+
+      <div class="pd__id">
+        <a routerLink="/shop" class="caption pd__back">← Shelf</a>
+
+        <p class="latin pd__latin">{{ p.latin }}</p>
+        <h1 class="display pd__name">{{ p.name }}</h1>
+        <p class="pd__line">{{ p.line }}</p>
+
+        <p class="pd__title">{{ p.title }}</p>
+
+        <div class="pd__buy">
+          <p class="num pd__price">
+            ₹{{ p.price | number: '1.0-2' }}
+            @if (p.mrp > p.price) {
+              <s>₹{{ p.mrp | number: '1.0-0' }}</s>
+            }
+          </p>
+          <p class="caption pd__weight">{{ p.weight }}</p>
+
+          <div class="pd__acts">
+            <div class="step">
+              <button type="button" (click)="fewer()" aria-label="One fewer">−</button>
+              <span class="num">{{ qty() }}</span>
+              <button type="button" (click)="more()" aria-label="One more">+</button>
+            </div>
+
+            <button type="button" class="act act--solid" (click)="add(p)">
+              Add to bag · ₹{{ lineTotal() | number: '1.0-2' }}
+            </button>
+          </div>
+
+          <p class="caption pd__ship">Free shipping over ₹499 · Buy any 2, take 15% off</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- Facts ---------- -->
+    <div class="pd__facts shell">
+      <dl class="grid">
+        @for (f of p.facts; track f.k; let i = $index) {
+          <div class="grid__cell" appReveal [revealDelay]="i * 90">
+            <dt class="caption">{{ f.k }}</dt>
+            <dd class="display grid__v">{{ f.v }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+
+    <!-- ---------- Words ---------- -->
+    <div class="pd__words shell">
+      <section class="say" appReveal>
+        <p class="caption say__k">How to use it</p>
+        <p class="say__v">{{ p.use }}</p>
+      </section>
+
+      <section class="say" appReveal [revealDelay]="120">
+        <p class="caption say__k">Where it comes from</p>
+        <p class="say__v">{{ p.origin }}</p>
+      </section>
+    </div>
+
+    <!-- ---------- Rest ---------- -->
+    <div class="pd__rest shell">
+      <p class="caption pd__restk">The other plants</p>
+
+      <ul class="rest">
+        @for (r of rest(); track r.id; let i = $index) {
+          <li
+            class="rest__i"
+            appReveal
+            [revealDelay]="i * 80"
+            [ngStyle]="{ '--hue': r.hue, '--deep': r.deep }">
+            <a [routerLink]="['/product', r.slug]" class="rest__a">
+              <span class="rest__jar">
+                <app-jar [hue]="r.hue" [deep]="r.deep" [fill]="0.6" [key]="'r-' + r.id" />
+              </span>
+              <span class="rest__n">{{ r.name }}</span>
+              <span class="num rest__p">₹{{ r.price | number: '1.0-2' }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </article>
+
+} @else {
+
+  <section class="gone shell">
+    <h1 class="display gone__h">We do not make that.</h1>
+    <a routerLink="/shop" class="act act--solid">See what we do make</a>
+  </section>
+
+}

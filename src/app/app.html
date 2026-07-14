@@ -1,0 +1,45 @@
+<app-nav />
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="foot">
+  <div class="shell foot__top">
+    <div class="foot__mark">
+      <p class="display foot__word">Herbal</p>
+      <p class="foot__blurb">
+        Single-ingredient plant powders. Nothing added, because there is nothing
+        we want to add.
+      </p>
+    </div>
+
+    <div class="foot__col">
+      <p class="caption">Reach us</p>
+      <a href="mailto:mrorganics.co@gmail.com">mrorganics.co&#64;gmail.com</a>
+      <a href="tel:+918686228955">+91 86862 28955</a>
+    </div>
+
+    <div class="foot__col">
+      <p class="caption">Find us</p>
+      <address>
+        4-108, Tallacheruvu,<br />
+        Atchampet, Guntur,<br />
+        Andhra Pradesh 522409
+      </address>
+    </div>
+
+    <div class="foot__col">
+      <p class="caption">Open</p>
+      <p>All days</p>
+      <p class="num">9:00 — 20:00</p>
+    </div>
+  </div>
+
+  <div class="shell foot__end">
+    <span class="caption">© {{ year }} Herbal</span>
+    <span class="caption">Product of India</span>
+  </div>
+</footer>
+
+<app-cart-drawer />

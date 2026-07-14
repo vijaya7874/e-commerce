@@ -1,0 +1,33 @@
+<nav class="nav">
+  <a routerLink="/" class="nav__mark" (click)="closeMenu()">
+    <span class="nav__word">Herbal</span>
+    <span class="caption nav__place">Guntur</span>
+  </a>
+
+  <div class="nav__links" [class.is-open]="menuOpen()">
+    <a
+      routerLink="/shop"
+      routerLinkActive="is-here"
+      class="nav__link"
+      (click)="closeMenu()">Shop</a>
+
+    <a routerLink="/" fragment="story" class="nav__link" (click)="closeMenu()">Story</a>
+  </div>
+
+  <div class="nav__right">
+    <button type="button" class="nav__bag" (click)="cart.open.set(true)">
+      <span>Bag</span>
+      <span class="num nav__n">{{ cart.count() }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="nav__burger"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Menu"
+      (click)="toggleMenu()">
+      <span class="nav__bar"></span>
+      <span class="nav__bar"></span>
+    </button>
+  </div>
+</nav>

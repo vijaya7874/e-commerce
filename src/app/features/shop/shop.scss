@@ -1,0 +1,187 @@
+.shelf {
+  padding-top: 9rem;
+  padding-bottom: 8rem;
+  min-height: 100svh;
+
+  &__top {
+    margin-bottom: 3.5rem;
+  }
+
+  &__title {
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    margin: 0.75rem 0 2.5rem;
+  }
+}
+
+/* ---------- Filters ---------- */
+
+.cuts {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid var(--rule);
+
+  &__b {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.86rem;
+    color: var(--soil-soft);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    margin-bottom: -1px;
+    padding: 0 0 0.85rem;
+    cursor: pointer;
+    transition: color 300ms var(--ease), border-color 300ms var(--ease);
+
+    &:hover {
+      color: var(--soil);
+    }
+
+    &.is-on {
+      color: var(--soil);
+      border-color: var(--soil);
+    }
+
+    &:focus-visible {
+      outline: 1px solid var(--soil);
+      outline-offset: 4px;
+    }
+  }
+}
+
+/* ---------- Rows ----------
+   A shelf, not a grid of cards. Each product is a line you read across.
+   ------------------------------------------------------------------ */
+
+.rows {
+  list-style: none;
+
+  &__none {
+    padding: 4rem 0;
+    color: var(--soil-soft);
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 60px minmax(150px, 1fr) minmax(0, 1.5fr) auto auto auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 500ms var(--ease);
+
+  &:hover {
+    background: color-mix(in oklab, var(--hue) 6%, transparent);
+  }
+
+  &__jar {
+    width: 60px;
+    display: block;
+    transition: transform 500ms var(--ease);
+  }
+
+  &:hover &__jar {
+    transform: translateY(-4px);
+  }
+
+  &__name {
+    display: block;
+    font-size: 1.35rem;
+    color: var(--soil);
+    text-decoration: none;
+    transition: color 400ms var(--ease);
+  }
+
+  &:hover &__name {
+    color: var(--deep);
+  }
+
+  &__latin {
+    font-size: 0.82rem;
+    color: var(--soil-soft);
+  }
+
+  &__line {
+    font-size: 0.92rem;
+    color: var(--soil-soft);
+  }
+
+  &__weight {
+    font-size: 0.62rem;
+    white-space: nowrap;
+  }
+
+  &__price {
+    font-size: 1.05rem;
+    white-space: nowrap;
+
+    s {
+      font-size: 0.78rem;
+      opacity: 0.5;
+      margin-left: 0.45rem;
+    }
+  }
+
+  &__add {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1000px) {
+  .row {
+    grid-template-columns: 52px 1fr auto;
+    grid-template-areas:
+      'jar id     price'
+      'jar line   line'
+      'jar weight add';
+    gap: 0.4rem 1.5rem;
+    align-items: start;
+
+    &__jar {
+      grid-area: jar;
+      width: 52px;
+      align-self: center;
+    }
+
+    &__id {
+      grid-area: id;
+    }
+
+    &__line {
+      grid-area: line;
+      margin-top: 0.5rem;
+    }
+
+    &__price {
+      grid-area: price;
+      text-align: right;
+    }
+
+    &__weight {
+      grid-area: weight;
+      align-self: center;
+      margin-top: 1rem;
+    }
+
+    &__add {
+      grid-area: add;
+      justify-self: end;
+      margin-top: 1rem;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 44px 1fr;
+    grid-template-areas:
+      'jar id'
+      'jar price'
+      'line line'
+      'weight add';
+
+    &__jar { width: 44px; }
+    &__price { text-align: left; margin-top: 0.3rem; }
+    &__line { margin-top: 0.8rem; }
+  }
+}

@@ -1,0 +1,146 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.4rem clamp(1.5rem, 4vw, 3rem);
+  /* Reads over any chapter colour without a slab of solid background. */
+  backdrop-filter: blur(9px);
+  background: color-mix(in oklab, var(--bone) 62%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--rule) 50%, transparent);
+
+  &__mark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--soil);
+  }
+
+  &__word {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.28rem;
+    letter-spacing: -0.015em;
+  }
+
+  &__place {
+    font-size: 0.6rem;
+    opacity: 0.65;
+  }
+
+  &__links {
+    display: flex;
+    gap: 2rem;
+    margin-left: auto;
+    margin-right: 2rem;
+  }
+
+  &__link {
+    font-size: 0.86rem;
+    color: var(--soil-soft);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 300ms var(--ease), border-color 300ms var(--ease);
+
+    &:hover,
+    &.is-here {
+      color: var(--soil);
+      border-color: var(--soil);
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__bag {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.86rem;
+    color: var(--soil);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+
+    &:focus-visible {
+      outline: 1px solid var(--soil);
+      outline-offset: 6px;
+    }
+  }
+
+  &__n {
+    display: grid;
+    place-items: center;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding: 0 0.3rem;
+    font-size: 0.68rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    transition: background 400ms var(--ease), color 400ms var(--ease),
+      border-color 400ms var(--ease);
+  }
+
+  &__bag:hover &__n {
+    background: var(--soil);
+    border-color: var(--soil);
+    color: var(--bone);
+  }
+
+  &__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 26px;
+    height: 26px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  &__bar {
+    height: 1px;
+    width: 100%;
+    background: var(--soil);
+  }
+}
+
+@media (max-width: 700px) {
+  .nav__burger {
+    display: flex;
+  }
+
+  .nav__links {
+    position: absolute;
+    inset: 100% 0 auto 0;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    background: var(--bone);
+    border-bottom: 1px solid var(--rule);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 450ms var(--ease);
+
+    &.is-open {
+      max-height: 12rem;
+    }
+  }
+
+  .nav__link {
+    padding: 1rem clamp(1.5rem, 4vw, 3rem);
+    border-bottom: 0;
+  }
+}

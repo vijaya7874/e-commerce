@@ -1,0 +1,122 @@
+<svg
+  class="jar"
+  viewBox="0 0 220 360"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  [attr.aria-label]="label()">
+
+  <defs>
+    <!-- Everything inside the glass gets clipped to this shape. -->
+    <clipPath [attr.id]="clipId()">
+      <path d="M42 96 h136 v168 a36 36 0 0 1 -36 36 h-64 a36 36 0 0 1 -36 -36 z" />
+    </clipPath>
+
+    <!-- Light falling across the glass. -->
+    <linearGradient [attr.id]="glassId()" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.34" />
+      <stop offset="26%" stop-color="#fff" stop-opacity="0.06" />
+      <stop offset="62%" stop-color="#fff" stop-opacity="0" />
+      <stop offset="88%" stop-color="#fff" stop-opacity="0.14" />
+    </linearGradient>
+
+    <!-- Powder is not flat. Give it tooth. -->
+    <filter [attr.id]="grainId()" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" />
+      <feColorMatrix type="saturate" values="0" />
+      <feBlend mode="multiply" in2="SourceGraphic" />
+    </filter>
+  </defs>
+
+  <!-- ---------- Contents ---------- -->
+  <g [attr.clip-path]="'url(#' + clipId() + ')'">
+
+    <!-- Powder body -->
+    <rect
+      class="jar__powder"
+      x="42"
+      [attr.y]="surfaceY()"
+      width="136"
+      [attr.height]="powderHeight()"
+      [attr.fill]="hue()" />
+
+    <!-- Settled shadow at the base -->
+    <rect
+      class="jar__sediment"
+      x="42"
+      y="252"
+      width="136"
+      height="48"
+      [attr.fill]="deep()"
+      opacity="0.5" />
+
+    <!-- Grain over the powder -->
+    <rect
+      x="42"
+      [attr.y]="surfaceY()"
+      width="136"
+      [attr.height]="powderHeight()"
+      [attr.fill]="deep()"
+      [attr.filter]="'url(#' + grainId() + ')'"
+      opacity="0.16" />
+
+    <!-- The heaped surface, slightly uneven -->
+    <path
+      class="jar__surface"
+      [attr.d]="
+        'M42 ' + surfaceY() +
+        ' q 22 -9 40 -3 q 20 7 38 -2 q 20 -8 38 3 q 12 4 20 2 l 0 6 l -136 0 z'
+      "
+      [attr.fill]="deep()"
+      opacity="0.28" />
+
+    <!-- Glass highlight, over the powder -->
+    <rect x="42" y="96" width="136" height="204" [attr.fill]="'url(#' + glassId() + ')'" />
+  </g>
+
+  <!-- ---------- The vessel ---------- -->
+
+  <!-- Body -->
+  <path
+    class="jar__glass"
+    d="M42 96 h136 v168 a36 36 0 0 1 -36 36 h-64 a36 36 0 0 1 -36 -36 z"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2" />
+
+  <!-- Neck -->
+  <path
+    class="jar__glass"
+    d="M70 96 v-22 h80 v22"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2" />
+
+  <!-- Lid -->
+  <rect
+    class="jar__lid"
+    x="60"
+    y="50"
+    width="100"
+    height="26"
+    rx="6"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2" />
+
+  <line
+    x1="60" y1="63" x2="160" y2="63"
+    stroke="currentColor" stroke-width="1" opacity="0.35" />
+
+  <!-- Label plate. Deliberately blank — the type sits outside the jar. -->
+  <rect
+    class="jar__label"
+    x="66"
+    y="176"
+    width="88"
+    height="58"
+    rx="3"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1"
+    opacity="0.4" />
+</svg>

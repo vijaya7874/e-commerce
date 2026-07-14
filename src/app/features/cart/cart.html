@@ -1,0 +1,110 @@
+<section class="wrap page">
+  <p class="eyebrow">{{ cart.count() }} item(s)</p>
+  <h1 class="page__title">Your bag</h1>
+
+  @if (cart.items().length) {
+
+    <!-- FREE SHIPPING METER -->
+    <div class="meter" [class.is-done]="cart.shipping() === 0">
+      <div class="meter__bar">
+        <div class="meter__fill" [style.width.%]="cart.freeShipProgress()"></div>
+      </div>
+      <p class="meter__label mono">
+        @if (cart.shipping() === 0) {
+          FREE SHIPPING UNLOCKED ✓
+        } @else {
+          ADD ₹{{ cart.freeShipGap() }} MORE FOR FREE SHIPPING
+        }
+      </p>
+    </div>
+
+    <div class="layout">
+
+      <!-- LINE ITEMS -->
+      <div class="lines">
+        @for (item of cart.items(); track item.product.id) {
+          <article
+            class="line"
+            [ngStyle]="{ '--c': item.product.color, '--i': item.product.ink }">
+
+            <a [routerLink]="['/product', item.product.slug]" class="line__thumb">
+              {{ item.product.emoji }}
+            </a>
+
+            <div class="line__meta">
+              <h3 class="line__name">{{ item.product.name }}</h3>
+              <p class="line__weight mono">{{ item.product.weight }}</p>
+              <button type="button" class="line__remove" (click)="cart.remove(item.product.id)">
+                Remove
+              </button>
+            </div>
+
+            <div class="stepper">
+              <button
+                type="button"
+                (click)="cart.setQty(item.product.id, item.qty - 1)"
+                aria-label="Decrease quantity">−</button>
+              <span class="mono">{{ item.qty }}</span>
+              <button
+                type="button"
+                (click)="cart.setQty(item.product.id, item.qty + 1)"
+                aria-label="Increase quantity">+</button>
+            </div>
+
+            <strong class="line__price">
+              {{ item.product.price * item.qty | currency: 'INR' : 'symbol' : '1.0-0' }}
+            </strong>
+          </article>
+        }
+      </div>
+
+      <!-- SUMMARY -->
+      <aside class="summary">
+        <h2 class="summary__title">Summary</h2>
+
+        <dl class="summary__list">
+          <div class="summary__row">
+            <dt>Subtotal</dt>
+            <dd>{{ cart.subtotal() | currency: 'INR' : 'symbol' : '1.0-0' }}</dd>
+          </div>
+
+          @if (cart.savings() > 0) {
+            <div class="summary__row summary__row--saved">
+              <dt>You saved</dt>
+              <dd>−{{ cart.savings() | currency: 'INR' : 'symbol' : '1.0-0' }}</dd>
+            </div>
+          }
+
+          <div class="summary__row">
+            <dt>Shipping</dt>
+            <dd>
+              @if (cart.shipping() === 0) {
+                FREE
+              } @else {
+                {{ cart.shipping() | currency: 'INR' : 'symbol' : '1.0-0' }}
+              }
+            </dd>
+          </div>
+        </dl>
+
+        <div class="summary__total">
+          <span>Total</span>
+          <strong>{{ cart.total() | currency: 'INR' : 'symbol' : '1.0-0' }}</strong>
+        </div>
+
+        <button type="button" class="btn summary__checkout">Checkout</button>
+        <a routerLink="/shop" class="summary__keep">Keep shopping</a>
+      </aside>
+    </div>
+
+  } @else {
+
+    <div class="empty">
+      <span class="empty__glyph">🧺</span>
+      <h2 class="empty__title">Nothing in the bag yet</h2>
+      <p class="empty__body">Pick a plant. Start with moringa if you cannot decide.</p>
+      <a routerLink="/shop" class="btn">Go to the shelf</a>
+    </div>
+
+  }
+</section>
