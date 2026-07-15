@@ -16,7 +16,8 @@
         type="button"
         class="bar__bag"
         [class.is-pulse]="bagPulse()"
-        aria-label="Cart">
+        aria-label="Open cart"
+        (click)="cart.open.set(true)">
         <svg viewBox="0 0 24 24" width="21" height="21" fill="none" aria-hidden="true">
           <path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
           <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.6"/>

@@ -9,6 +9,7 @@ import { Testimonials } from './sections/testimonials/testimonials';
 import { Stats } from './sections/stats/stats';
 import { Newsletter } from './sections/newsletter/newsletter';
 import { Footer } from './sections/footer/footer';
+import { CartDrawer } from './sections/cart-drawer/cart-drawer';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { Footer } from './sections/footer/footer';
     Stats,
     Newsletter,
     Footer,
+    CartDrawer,
   ],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

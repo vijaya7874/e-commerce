@@ -21,6 +21,9 @@ export class CartService {
   /** Fires a pulse on the nav bag when something is added. */
   readonly justAdded = signal(0);
 
+  /** Whether the mini-cart drawer is open. */
+  readonly open = signal(false);
+
   constructor() {
     effect(() => {
       try {
@@ -39,6 +42,20 @@ export class CartService {
         : [...lines, { product, qty: 1 }];
     });
     this.justAdded.update((n) => n + 1);
+  }
+
+  remove(id: string): void {
+    this._lines.update((lines) => lines.filter((l) => l.product.id !== id));
+  }
+
+  setQty(id: string, qty: number): void {
+    if (qty < 1) {
+      this.remove(id);
+      return;
+    }
+    this._lines.update((lines) =>
+      lines.map((l) => (l.product.id === id ? { ...l, qty } : l))
+    );
   }
 
   private load(): Line[] {
