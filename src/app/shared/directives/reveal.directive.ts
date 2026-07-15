@@ -1,61 +1,31 @@
-import {
-  Directive,
-  ElementRef,
-  inject,
-  input,
-  signal,
-  afterNextRender,
-  DestroyRef,
-} from '@angular/core';
+import { Directive, ElementRef, inject, input, afterNextRender } from '@angular/core';
+import { MotionService } from '../../core/services/motion.service';
 
 /**
- * Adds `is-revealed` to the host the first time it enters the viewport.
- * Styling lives in CSS; this only flips the class.
+ * Drop-in scroll reveal. Wraps MotionService so templates stay declarative:
  *
- *   <p appReveal [revealDelay]="120">…</p>
+ *   <div appReveal [revealDelay]="0.2">…</div>
  */
-@Directive({
-  selector: '[appReveal]',
-  host: {
-    '[class.reveal]': 'true',
-    '[class.is-revealed]': 'shown()',
-    '[style.transition-delay.ms]': 'revealDelay()',
-  },
-})
+@Directive({ selector: '[appReveal]' })
 export class RevealDirective {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly motion = inject(MotionService);
 
-  /** Stagger, in milliseconds. */
   readonly revealDelay = input(0);
-
-  /** How much of the element must show before it counts. */
-  readonly revealAt = input(0.2);
-
-  protected readonly shown = signal(false);
+  readonly revealY = input(40);
 
   constructor() {
     afterNextRender(() => {
-      const el = this.host.nativeElement as HTMLElement;
-
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) {
-        this.shown.set(true);
-        return;
+      const el = this.host.nativeElement;
+      // Hide only now that we know JS runs. If GSAP is unavailable, the
+      // element was never hidden and simply stays visible.
+      if (!this.motion.reduced()) {
+        el.classList.add('reveal-armed');
       }
-
-      const io = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            this.shown.set(true);
-            io.disconnect();
-          }
-        },
-        { threshold: this.revealAt() }
-      );
-
-      io.observe(el);
-      this.destroyRef.onDestroy(() => io.disconnect());
+      this.motion.revealOnScroll(el, {
+        delay: this.revealDelay(),
+        y: this.revealY(),
+      });
     });
   }
 }

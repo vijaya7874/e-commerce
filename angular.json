@@ -3,12 +3,10 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "herbal": {
+    "organic": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
+        "@schematics/angular:component": { "style": "scss" }
       },
       "root": "",
       "sourceRoot": "src",
@@ -17,32 +15,19 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/herbal",
+            "outputPath": "dist/organic",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": [{ "glob": "**/*", "input": "public" }],
             "styles": ["src/styles.scss"]
           },
           "configurations": {
             "production": {
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "600kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "12kB",
-                  "maximumError": "20kB"
-                }
+                { "type": "initial", "maximumWarning": "800kB", "maximumError": "1.5MB" },
+                { "type": "anyComponentStyle", "maximumWarning": "12kB", "maximumError": "24kB" }
               ],
               "outputHashing": "all"
             },
@@ -57,12 +42,8 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "herbal:build:production"
-            },
-            "development": {
-              "buildTarget": "herbal:build:development"
-            }
+            "production": { "buildTarget": "organic:build:production" },
+            "development": { "buildTarget": "organic:build:development" }
           },
           "defaultConfiguration": "development"
         }

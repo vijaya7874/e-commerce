@@ -1,83 +1,50 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
-import { Product, CartItem } from '../models/product.model';
+import { Product } from '../models/product.model';
 
-const KEY = 'herbal_cart';
-const FREE_SHIP_AT = 499;
-const FLAT_SHIPPING = 49;
+interface Line {
+  product: Product;
+  qty: number;
+}
+
+const KEY = 'organic_cart';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private readonly _items = signal<CartItem[]>(this.load());
+  private readonly _lines = signal<Line[]>(this.load());
 
-  /** Drawer open/closed. The cart is a panel, not a page. */
-  readonly open = signal(false);
-
-  readonly items = this._items.asReadonly();
-
-  readonly count = computed(() => this._items().reduce((n, i) => n + i.qty, 0));
-
-  readonly subtotal = computed(() =>
-    this._items().reduce((n, i) => n + i.product.price * i.qty, 0)
+  readonly lines = this._lines.asReadonly();
+  readonly count = computed(() => this._lines().reduce((n, l) => n + l.qty, 0));
+  readonly total = computed(() =>
+    this._lines().reduce((n, l) => n + l.product.price * l.qty, 0)
   );
 
-  readonly savings = computed(() =>
-    this._items().reduce((n, i) => n + (i.product.mrp - i.product.price) * i.qty, 0)
-  );
-
-  readonly shipping = computed(() => {
-    const s = this.subtotal();
-    return s === 0 || s >= FREE_SHIP_AT ? 0 : FLAT_SHIPPING;
-  });
-
-  readonly total = computed(() => this.subtotal() + this.shipping());
-
-  readonly toFreeShipping = computed(() => Math.max(0, FREE_SHIP_AT - this.subtotal()));
-
-  readonly shippingProgress = computed(() =>
-    Math.min(100, (this.subtotal() / FREE_SHIP_AT) * 100)
-  );
+  /** Fires a pulse on the nav bag when something is added. */
+  readonly justAdded = signal(0);
 
   constructor() {
     effect(() => {
-      const snapshot = this._items();
       try {
-        localStorage.setItem(KEY, JSON.stringify(snapshot));
+        localStorage.setItem(KEY, JSON.stringify(this._lines()));
       } catch {
-        // Storage blocked. The cart still works for this session.
+        // Storage blocked; cart lives for this session only.
       }
     });
   }
 
-  add(product: Product, qty = 1): void {
-    this._items.update((items) => {
-      const found = items.find((i) => i.product.id === product.id);
-      return found
-        ? items.map((i) => (i.product.id === product.id ? { ...i, qty: i.qty + qty } : i))
-        : [...items, { product, qty }];
+  add(product: Product): void {
+    this._lines.update((lines) => {
+      const hit = lines.find((l) => l.product.id === product.id);
+      return hit
+        ? lines.map((l) => (l.product.id === product.id ? { ...l, qty: l.qty + 1 } : l))
+        : [...lines, { product, qty: 1 }];
     });
-    this.open.set(true);
+    this.justAdded.update((n) => n + 1);
   }
 
-  setQty(id: string, qty: number): void {
-    if (qty <= 0) {
-      this.remove(id);
-      return;
-    }
-    this._items.update((items) => items.map((i) => (i.product.id === id ? { ...i, qty } : i)));
-  }
-
-  remove(id: string): void {
-    this._items.update((items) => items.filter((i) => i.product.id !== id));
-  }
-
-  clear(): void {
-    this._items.set([]);
-  }
-
-  private load(): CartItem[] {
+  private load(): Line[] {
     try {
       const raw = localStorage.getItem(KEY);
-      return raw ? (JSON.parse(raw) as CartItem[]) : [];
+      return raw ? (JSON.parse(raw) as Line[]) : [];
     } catch {
       return [];
     }
