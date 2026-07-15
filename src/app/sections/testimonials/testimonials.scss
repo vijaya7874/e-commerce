@@ -1,0 +1,125 @@
+.revs {
+  background: linear-gradient(180deg, var(--beige), var(--cream));
+
+  &__stage {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 780px;
+    margin-inline: auto;
+  }
+
+  &__track {
+    flex: 1;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+
+  &__rail {
+    display: flex;
+    transition: transform 0.7s var(--ease);
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--forest-deep);
+    background: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+
+    &:hover {
+      transform: scale(1.08);
+      background: var(--sage-soft);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--forest);
+      outline-offset: 3px;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  &__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    background: var(--line);
+    cursor: pointer;
+    transition: background 0.3s var(--ease), width 0.3s var(--ease);
+
+    &.is-on {
+      width: 26px;
+      border-radius: 999px;
+      background: var(--forest);
+    }
+  }
+}
+
+.rev {
+  flex: 0 0 100%;
+  display: grid;
+  gap: 1.25rem;
+  padding: 2.75rem;
+  border-radius: var(--radius-lg);
+
+  &__stars {
+    font-size: 1.05rem;
+  }
+
+  &__words {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  &__who {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white);
+    background: var(--forest);
+  }
+
+  &__name {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  &__place {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+}
+
+@media (max-width: 620px) {
+  .revs__arrow { display: none; }
+  .rev { padding: 2rem 1.75rem; }
+}

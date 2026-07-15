@@ -1,0 +1,23 @@
+<section class="cat pad" id="categories">
+  <div class="shell">
+    <header class="head">
+      <p class="eyebrow" appReveal>Browse by kind</p>
+      <h2 class="head__title" appReveal [revealDelay]="0.1">Everything the farm grows</h2>
+    </header>
+
+    <div class="cat__grid">
+      @for (c of categories(); track c.name; let i = $index) {
+        <a
+          href="#products"
+          class="tile"
+          appReveal
+          [revealDelay]="i * 0.08"
+          [style.--tone]="c.tone">
+          <span class="tile__emoji">{{ c.emoji }}</span>
+          <span class="tile__name">{{ c.name }}</span>
+          <span class="tile__count">{{ c.count }} items</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>

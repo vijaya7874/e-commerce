@@ -1,0 +1,35 @@
+<section class="news">
+  <div class="shell">
+    <div class="news__card" appReveal>
+      <span class="news__leaf news__leaf--1" aria-hidden="true">🌿</span>
+      <span class="news__leaf news__leaf--2" aria-hidden="true">🍃</span>
+      <span class="news__leaf news__leaf--3" aria-hidden="true">🌱</span>
+
+      <div class="news__inner">
+        <p class="eyebrow news__eyebrow">Stay in touch</p>
+        <h2 class="news__title">Join our organic family</h2>
+        <p class="news__sub">
+          Recipes, restocks, and the occasional discount. No spam, ever.
+        </p>
+
+        @if (done()) {
+          <p class="news__thanks">You’re in. Welcome to the family. 🌱</p>
+        } @else {
+          <div class="news__form">
+            <input
+              type="email"
+              class="news__input"
+              placeholder="name@email.com"
+              [value]="email()"
+              (input)="email.set($any($event.target).value)"
+              (keyup.enter)="submit()"
+              aria-label="Email address" />
+            <button type="button" class="btn btn--gold" appMagnetic (click)="submit()">
+              Subscribe
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

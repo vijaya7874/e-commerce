@@ -1,0 +1,39 @@
+<section class="story pad" id="farm">
+  <div class="shell story__grid">
+    <div class="story__visual">
+      <div class="story__scene" aria-hidden="true">
+        <span class="story__sun">☀️</span>
+        <span class="story__hill"></span>
+        <span class="story__row story__row--1"></span>
+        <span class="story__row story__row--2"></span>
+        <span class="story__row story__row--3"></span>
+        <span class="story__crop" style="left:14%">🌱</span>
+        <span class="story__crop" style="left:34%">🌿</span>
+        <span class="story__crop" style="left:56%">🌱</span>
+        <span class="story__crop" style="left:78%">🌿</span>
+      </div>
+      <div class="story__stat glass" appReveal>
+        <span class="story__statnum">100+</span>
+        <span class="story__statlabel">farm partners we know by name</span>
+      </div>
+    </div>
+
+    <div class="story__text">
+      <p class="eyebrow" appReveal>Our story</p>
+      <h2 class="story__title" appReveal [revealDelay]="0.1">
+        We grew up in the fields we now buy from
+      </h2>
+
+      <ol class="timeline">
+        @for (m of milestones(); track m.title; let i = $index) {
+          <li class="timeline__item" appReveal [revealDelay]="0.15 + i * 0.12">
+            <span class="timeline__dot"></span>
+            <p class="timeline__year">{{ m.year }}</p>
+            <h3 class="timeline__h">{{ m.title }}</h3>
+            <p class="timeline__b">{{ m.body }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+  </div>
+</section>

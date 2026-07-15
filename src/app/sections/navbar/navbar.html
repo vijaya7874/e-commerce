@@ -1,0 +1,39 @@
+<header class="bar" [class.is-solid]="solid()" [class.is-open]="menuOpen()">
+  <div class="bar__inner shell">
+    <a href="#top" class="bar__logo" (click)="close()">
+      <span class="bar__leaf">🌱</span>
+      <span class="serif bar__word">Mr Organics</span>
+    </a>
+
+    <nav class="bar__nav" [class.is-open]="menuOpen()">
+      @for (l of links; track l.href) {
+        <a [href]="l.href" class="bar__link" (click)="close()">{{ l.label }}</a>
+      }
+    </nav>
+
+    <div class="bar__right">
+      <button
+        type="button"
+        class="bar__bag"
+        [class.is-pulse]="bagPulse()"
+        aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        @if (cart.count(); as n) {
+          <span class="bar__count">{{ n }}</span>
+        }
+      </button>
+
+      <button
+        type="button"
+        class="bar__burger"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Menu"
+        (click)="toggle()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,139 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding-top: 6rem;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 80% 10%, rgba(165, 214, 167, 0.5) 0%, transparent 55%),
+    radial-gradient(90% 80% at 10% 90%, rgba(201, 162, 39, 0.18) 0%, transparent 50%),
+    linear-gradient(160deg, #FBFCF5 0%, var(--cream) 60%, var(--beige) 100%);
+
+  &__blob {
+    position: absolute;
+    border-radius: 46% 54% 60% 40% / 48% 42% 58% 52%;
+    filter: blur(2px);
+    z-index: 0;
+
+    &--1 {
+      width: 46vw;
+      height: 46vw;
+      top: -12vw;
+      right: -8vw;
+      background: radial-gradient(circle at 40% 40%, rgba(46, 125, 50, 0.14), transparent 70%);
+    }
+
+    &--2 {
+      width: 40vw;
+      height: 40vw;
+      bottom: -14vw;
+      left: -10vw;
+      background: radial-gradient(circle at 60% 60%, rgba(107, 142, 35, 0.12), transparent 70%);
+    }
+  }
+
+  &__rays {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    translate: -50% 0;
+    width: 80vw;
+    height: 80vw;
+    max-width: 900px;
+    max-height: 900px;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(255, 245, 200, 0.5) 6deg,
+      transparent 12deg,
+      transparent 24deg,
+      rgba(255, 245, 200, 0.35) 30deg,
+      transparent 36deg,
+      transparent 54deg,
+      rgba(255, 245, 200, 0.4) 60deg,
+      transparent 66deg
+    );
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+  }
+
+  &__floaters {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    padding-bottom: 4rem;
+  }
+
+  &__title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(3rem, 9vw, 6.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin: 1.4rem 0;
+    color: var(--forest-darker);
+  }
+
+  &__lede {
+    max-width: 46ch;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin-bottom: 2.25rem;
+  }
+
+  &__acts {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  &__trust {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  &__curve {
+    position: absolute;
+    inset: auto 0 -1px 0;
+    z-index: 2;
+    line-height: 0;
+
+    svg {
+      width: 100%;
+      height: clamp(60px, 8vw, 120px);
+      display: block;
+    }
+  }
+}
+
+.floater {
+  position: absolute;
+  display: block;
+  translate: -50% -50%;
+  filter: drop-shadow(0 14px 24px rgba(27, 94, 32, 0.22));
+  will-change: transform;
+}
+
+@media (max-width: 620px) {
+  .floater {
+    opacity: 0.55;
+  }
+
+  .hero__inner {
+    padding-bottom: 2rem;
+  }
+}
